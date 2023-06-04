@@ -32,11 +32,15 @@
             btnClose = new Button();
             northwindDB = new Button();
             anotherDB = new Button();
+            btnCount = new Button();
+            btnSP = new Button();
+            btnCommand = new Button();
+            cbIDs = new ComboBox();
             SuspendLayout();
             // 
             // btnOpen
             // 
-            btnOpen.Location = new Point(54, 266);
+            btnOpen.Location = new Point(3, 224);
             btnOpen.Name = "btnOpen";
             btnOpen.Size = new Size(144, 55);
             btnOpen.TabIndex = 0;
@@ -46,7 +50,7 @@
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(598, 266);
+            btnClose.Location = new Point(4, 294);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(143, 55);
             btnClose.TabIndex = 1;
@@ -56,9 +60,9 @@
             // 
             // northwindDB
             // 
-            northwindDB.Location = new Point(345, 182);
+            northwindDB.Location = new Point(160, 224);
             northwindDB.Name = "northwindDB";
-            northwindDB.Size = new Size(107, 50);
+            northwindDB.Size = new Size(107, 55);
             northwindDB.TabIndex = 2;
             northwindDB.Text = "Northwind";
             northwindDB.UseVisualStyleBackColor = true;
@@ -66,19 +70,62 @@
             // 
             // anotherDB
             // 
-            anotherDB.Location = new Point(345, 266);
+            anotherDB.Location = new Point(160, 294);
             anotherDB.Name = "anotherDB";
-            anotherDB.Size = new Size(107, 35);
+            anotherDB.Size = new Size(107, 55);
             anotherDB.TabIndex = 3;
             anotherDB.Text = "Another DB";
             anotherDB.UseVisualStyleBackColor = true;
             anotherDB.Click += button1_Click_1;
+            // 
+            // btnCount
+            // 
+            btnCount.Location = new Point(280, 224);
+            btnCount.Name = "btnCount";
+            btnCount.Size = new Size(139, 55);
+            btnCount.TabIndex = 4;
+            btnCount.Text = "Get Count Scalar";
+            btnCount.UseVisualStyleBackColor = true;
+            btnCount.Click += btnCount_Click;
+            // 
+            // btnSP
+            // 
+            btnSP.Location = new Point(280, 294);
+            btnSP.Name = "btnSP";
+            btnSP.Size = new Size(139, 55);
+            btnSP.TabIndex = 5;
+            btnSP.Text = "Stored Proced";
+            btnSP.UseVisualStyleBackColor = true;
+            btnSP.Click += btnNonQuery_Click;
+            // 
+            // btnCommand
+            // 
+            btnCommand.Location = new Point(280, 166);
+            btnCommand.Name = "btnCommand";
+            btnCommand.Size = new Size(139, 42);
+            btnCommand.TabIndex = 6;
+            btnCommand.Text = "Command";
+            btnCommand.UseVisualStyleBackColor = true;
+            btnCommand.Click += btnCommand_Click;
+            // 
+            // cbIDs
+            // 
+            cbIDs.FormattingEnabled = true;
+            cbIDs.Location = new Point(12, 177);
+            cbIDs.Name = "cbIDs";
+            cbIDs.Size = new Size(255, 23);
+            cbIDs.TabIndex = 7;
+            
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(cbIDs);
+            Controls.Add(btnCommand);
+            Controls.Add(btnSP);
+            Controls.Add(btnCount);
             Controls.Add(anotherDB);
             Controls.Add(northwindDB);
             Controls.Add(btnClose);
@@ -94,5 +141,9 @@
         private Button btnClose;
         private Button northwindDB;
         private Button anotherDB;
+        private Button btnCount;
+        private Button btnSP;
+        private Button btnCommand;
+        private ComboBox cbIDs;
     }
 }
