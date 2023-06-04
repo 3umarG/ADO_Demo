@@ -61,7 +61,7 @@ namespace First
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void changeDatabase(object sender, EventArgs e)
         {
             if (sqlConnection.State == ConnectionState.Open)
             {
@@ -69,7 +69,7 @@ namespace First
             }
         }
 
-        private void btnCount_Click(object sender, EventArgs e)
+        private void btnExecuteScalarCommand(object sender, EventArgs e)
         {
             sqlCommand = new SqlCommand();
             sqlCommand.Connection = sqlConnection;
@@ -92,7 +92,7 @@ namespace First
             }
         }
 
-        private void btnNonQuery_Click(object sender, EventArgs e)
+        private void btnExecuteStoredProcedure(object sender, EventArgs e)
         {
             sqlCommand = new SqlCommand();
             sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -116,7 +116,7 @@ namespace First
             this.Text = "Stored Procedure Done !!";
         }
 
-        private void btnCommand_Click(object sender, EventArgs e)
+        private void btnExecuteCommandText(object sender, EventArgs e)
         {
 
             sqlCommand = new SqlCommand();

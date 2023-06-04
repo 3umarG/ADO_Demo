@@ -76,7 +76,7 @@
             anotherDB.TabIndex = 3;
             anotherDB.Text = "Another DB";
             anotherDB.UseVisualStyleBackColor = true;
-            anotherDB.Click += button1_Click_1;
+            anotherDB.Click += changeDatabase;
             // 
             // btnCount
             // 
@@ -86,7 +86,7 @@
             btnCount.TabIndex = 4;
             btnCount.Text = "Get Count Scalar";
             btnCount.UseVisualStyleBackColor = true;
-            btnCount.Click += btnCount_Click;
+            btnCount.Click += btnExecuteScalarCommand;
             // 
             // btnSP
             // 
@@ -96,7 +96,7 @@
             btnSP.TabIndex = 5;
             btnSP.Text = "Stored Proced";
             btnSP.UseVisualStyleBackColor = true;
-            btnSP.Click += btnNonQuery_Click;
+            btnSP.Click += btnExecuteStoredProcedure;
             // 
             // btnCommand
             // 
@@ -106,7 +106,7 @@
             btnCommand.TabIndex = 6;
             btnCommand.Text = "Command";
             btnCommand.UseVisualStyleBackColor = true;
-            btnCommand.Click += btnCommand_Click;
+            btnCommand.Click += btnExecuteCommandText;
             // 
             // cbIDs
             // 
