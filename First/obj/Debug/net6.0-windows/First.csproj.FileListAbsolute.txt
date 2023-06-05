@@ -23,3 +23,4 @@ D:\CS_projects\ADO\First\obj\Debug\net6.0-windows\First.pdb
 D:\CS_projects\ADO\First\obj\Debug\net6.0-windows\First.genruntimeconfig.cache
 D:\CS_projects\ADO\First\obj\Debug\net6.0-windows\ref\First.dll
 D:\CS_projects\ADO\First\bin\Debug\net6.0-windows\First.dll.config
+D:\CS_projects\ADO\First\obj\Debug\net6.0-windows\First.FormSqlDataAdapter.resources

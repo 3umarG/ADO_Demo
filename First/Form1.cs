@@ -6,7 +6,7 @@ namespace First
 {
     public partial class Form1 : Form
     {
-        private SqlConnection sqlConnection;
+        private readonly SqlConnection sqlConnection;
         private SqlCommand sqlCommand;
         public Form1()
         {
@@ -69,6 +69,8 @@ namespace First
             }
         }
 
+        #region Execute Scalar Command : return one int value for Aggregate Functions : Max,Min,Sum,Avg,Count .
+        #endregion
         private void btnExecuteScalarCommand(object sender, EventArgs e)
         {
             sqlCommand = new SqlCommand();
@@ -76,12 +78,13 @@ namespace First
             //sqlCommand.CommandType = CommandType.StoredProcedure; // to use stored procedure as query
             sqlCommand.CommandText = "SELECT Count(*) From Products";
 
+            // Working on Connected Mode : should open the connection before doing any commands executing .
             if (sqlConnection.State == ConnectionState.Closed)
                 sqlConnection.Open();
 
             /// When use these functions you should open and close the Connection mannually 
-            //sqlCommand.ExecuteNonQuery();        // execute commands : that returns n raws affected
-            //sqlCommand.ExecuteReader();          // returns raws and columns
+            //sqlCommand.ExecuteNonQuery();        // execute commands : that returns n raws affected : int 
+            //sqlCommand.ExecuteReader();          // returns raws and columns : for Queries , accept in SqlDataReader
             var result = sqlCommand.ExecuteScalar();            // returns single value for Aggregate functions
 
             if (int.TryParse(result?.ToString() ?? "0", out int Number))
@@ -134,6 +137,8 @@ namespace First
             this.Text = $"{rawsEffected} Raws Effected !!!";
         }
 
+        #region For Queries : SqlDataReader
+        #endregion
         private void cbIDs_LoadItems(object sender, EventArgs e)
         {
             sqlCommand = new SqlCommand("Select ProductID from Products", sqlConnection);
@@ -144,10 +149,13 @@ namespace First
             // By using DataReader you have like a wrapper to the Database , but you have not the actual raws and columns
             // you  should start to iterate on them and get them one-by-one
             // Õ«Ã… „Õ«Êÿ… «·œ« « »Ì“ » «⁄ Ì »” „‘ Âﬁœ— «‰Ì «ÿ·⁄ Ê·« «” ﬁ»· «·œ« « » «⁄ Ì €Ì— ·„« «»œ√ «·› ⁄·ÌÂ«
+            #region Opened Read Only Stream of Raws from the Database
+            #endregion
             SqlDataReader results = sqlCommand.ExecuteReader();
 
 
             // Thats what we called DataBinding
+            // Loop and iterate for the Stream
             while (results.Read())
             {
                 cbIDs.Items.Add(results["ProductID"]);
