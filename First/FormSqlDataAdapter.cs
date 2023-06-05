@@ -16,9 +16,15 @@ namespace First
     {
 
         private readonly SqlConnection sqlConnection;
-        private SqlCommand sqlCommand;
-        private SqlDataAdapter sqlDataAdapter;
-        private DataTable dataTable;
+        private SqlCommand sqlProductsCommand;
+        private SqlDataAdapter sqlProductsDataAdapter;
+        private DataTable productsDataTable;
+
+        // For get Suppliers
+        private SqlCommand sqlSpCommand;
+        private SqlDataAdapter sqlSpDataAdapter;
+        private DataTable suppliersDataTable;
+
         public FormSqlDataAdapter()
         {
             InitializeComponent();
@@ -28,7 +34,7 @@ namespace First
         private void FillListBox()
         {
             /// Complext Binding : give the whole source without iterate over the results "list" ...
-            this.listProducts.DataSource = dataTable;
+            this.listProducts.DataSource = productsDataTable;
             this.listProducts.DisplayMember = "ProductName";       // chose the result that shows to user.
             this.listProducts.ValueMember = "ProductID";         // chose the value for select when you need any another commands depend on it
 
@@ -40,19 +46,27 @@ namespace First
 
         private void BtnGetProducts_Click(object sender, EventArgs e)
         {
-            sqlCommand = new SqlCommand("Select * from Products Where ProductID % 2 = @ID", sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@ID", 0);
+            sqlProductsCommand = new SqlCommand("Select * from Products Where ProductID % 2 = @ID", sqlConnection);
+            sqlProductsCommand.Parameters.AddWithValue("@ID", 0);
 
-            sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+            sqlProductsDataAdapter = new SqlDataAdapter(sqlProductsCommand);
 
-            dataTable = new DataTable();
+            productsDataTable = new DataTable();
+
+            // For Suppliers :
+            sqlSpCommand = new SqlCommand(@"Select SupplierID as SID , CompanyName from Suppliers", sqlConnection);
+            sqlSpDataAdapter = new SqlDataAdapter(sqlSpCommand);
+            suppliersDataTable = new DataTable();
+
+            // Fill the Supplier DataTable
+            sqlSpDataAdapter.Fill(suppliersDataTable);
 
             /// Fill : 
             /// 1- open connection 
             /// 2- execute command 
             /// 3- store the result on DataTable "DataSource"
             /// 4- close the connection
-            sqlDataAdapter.Fill(dataTable);
+            sqlProductsDataAdapter.Fill(productsDataTable);
 
             FillListBox();
 
@@ -62,14 +76,39 @@ namespace First
 
         private void FillGridView()
         {
-            this.gvProducts.DataSource = dataTable;
+            var supplierColumn = new DataGridViewComboBoxColumn();
+            supplierColumn.HeaderText = "Supplier Name";
+            supplierColumn.DataSource = suppliersDataTable;
+            supplierColumn.ValueMember = "SID"; // the background ref from Supplier Table
+            supplierColumn.DisplayMember = "CompanyName"; // the Displayed Name from Supplier Table
+            supplierColumn.DataPropertyName = "SupplierID";   // that link the selected value from this column to Products Table 
+
+
+            this.gvProducts.DataSource = productsDataTable;
+            this.gvProducts.Columns.AddRange(supplierColumn);
+            this.gvProducts.Columns["SupplierID"].ReadOnly = true;
+            
         }
 
         private void BtnSaveClick(object sender, EventArgs e)
         {
             // Still need SQL Command for : Update , Insert , Delete .
             // SqlCommandBuilder
-            sqlDataAdapter.Update(dataTable);
+            SqlCommandBuilder sqlCommandBuilder = new(sqlProductsDataAdapter);
+            this.gvProducts.EndEdit();
+
+
+
+            #region SqlCommandBuilder
+            /*
+             * The SqlDataAdapter automatically generates commands based on the 'RowState' of each row in the DataTable when you call Update().
+             * You can use GetInsertCommand, GetUpdateCommand, or GetDeleteCommand to retrieve the automatically generated commands for customization if needed.
+             * In most cases, you don't need to explicitly call these methods unless you require specific customizations for the commands.
+             */
+            #endregion
+
+            //sqlDataAdapter.UpdateCommand = sqlCommandBuilder.GetUpdateCommand();   // for more customization in UPDATE
+            sqlProductsDataAdapter.Update(productsDataTable);
         }
     }
 }
